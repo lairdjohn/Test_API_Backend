@@ -1,0 +1,40 @@
+{   "$schema": "http://json-schema.org/draft-07/schema#",
+        "definitions": {
+
+            "user": {
+                "id": "/user",
+                "title": "Users",
+                "description": "A user",
+                "type": "object",
+                "properties": {
+                    "first_name": {
+                        "description": "Users first name",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "Users last name",
+                        "type": "string"
+                    },
+                    "age": {
+                        "description": "Users age",
+                        "type": "integer"
+                    },
+                    "email": {
+                        "description": "Users email address",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "description": {
+                        "description": "Description that user can add",
+                        "type": "string"
+                    },
+                    "password":{
+                        "description": "Password for account",
+                        "type": "string",
+                        "format": "password"
+                    }
+                },
+                "required": ["first_name", "last_name", "age", "email", "password"]
+            }
+    }
+}
