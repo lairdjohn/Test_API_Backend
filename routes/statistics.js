@@ -1,7 +1,7 @@
 // Modules required
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
-var axios = require("axios").default; // Needed for external API call
+const axios = require("axios").default; // Needed for external API call
 const model = require('../models/stats');
 
 // Prefixed route
@@ -9,9 +9,8 @@ const router = Router({prefix: '/myAPI/v1'});
 
 // Endpoints
 // router.get('/stats', displayStats);
-// router.get('/stats/COD', getCODStats);
-router.post('/stats', bodyParser(), getCODStats)
-router.post('/stats/myProfile/:id([0-9]{1,})', bodyParser(), getCODStats)
+router.get('/stats', bodyParser(), getCODStats);
+router.get('/stats/myProfile/:id([0-9]{1,})', getMyStats)
 
 
 function displayStats(ctx){
@@ -70,6 +69,21 @@ async function getCODStats(ctx){
 async function saveData(data){
     try{
         await model.saveRecentStats(data)
+    } catch(error){
+        throw error
+    }
+}
+
+async function getMyStats(ctx){
+    let id = ctx.params.id
+    try{
+        let stats = await model.myStats(id)
+        console.log(stats)
+        if(stats.length !== 0){
+            ctx.body = stats
+        }else{
+            ctx.body = {Error: 'No Data'}
+        }
     } catch(error){
         throw error
     }
